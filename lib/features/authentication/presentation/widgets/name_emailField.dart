@@ -1,8 +1,5 @@
-// ignore_for_file: must_be_immutable, prefer_final_fields
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marchic/themes/theme_context.dart';
 import 'package:marchic/themes/tokens.dart';
 
 class CustomField extends StatelessWidget {
@@ -25,10 +22,11 @@ class CustomField extends StatelessWidget {
   TextEditingController fieldController = TextEditingController();
 
   CustomField({
-    Key? key,
+    super.key,
     required this.fieldName,
     required this.hintText,
-  }) : super(key: key);
+    required this.fieldController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +35,9 @@ class CustomField extends StatelessWidget {
       children: [
         Text(fieldName,
             textAlign: TextAlign.start,
-            style: context.textTheme.bodySmall!
-                .copyWith(fontWeight: FontWeight.w600, color: kGray[900])),
+            style: TextStyle(
+              fontWeight: FontWeight.w600, color: kGray[900], fontSize: 12.sp
+            )),
         SizedBox(
           height: 5.h,
         ),
@@ -46,8 +45,9 @@ class CustomField extends StatelessWidget {
           height: 44.h,
           child: TextField(
             controller: fieldController,
-            style: context.textTheme.bodyMedium!
-                .copyWith(color: kGray[900], fontWeight: FontWeight.w500),
+            style: TextStyle(
+              color: kGray[900], fontWeight: FontWeight.w500, fontSize: 12.sp
+            ),
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(vertical: 12.h, horizontal: 18.w),
@@ -55,8 +55,9 @@ class CustomField extends StatelessWidget {
               border: outlineInputBorder,
               focusedBorder: focusedInputBorder,
               hintText: hintText,
-              hintStyle: context.textTheme.bodyMedium!
-                  .copyWith(color: kGray[300], fontWeight: FontWeight.w500),
+              hintStyle: TextStyle(
+                color: kGray[300], fontWeight: FontWeight.w500, fontSize: 12.sp
+              ),
             ),
           ),
         ),

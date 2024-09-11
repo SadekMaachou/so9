@@ -3,15 +3,15 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marchic/themes/theme_context.dart';
 import 'package:marchic/themes/tokens.dart';
 
 class DropDown extends StatefulWidget {
   final String fieldName;
-  DropDown({
-    Key? key,
+
+  const DropDown({
+    super.key,
     required this.fieldName,
-  }) : super(key: key);
+  });
 
   @override
   State<DropDown> createState() => _DropDownState();
@@ -34,16 +34,15 @@ class _DropDownState extends State<DropDown> {
     ),
   );
 
-  TextEditingController fieldController = TextEditingController();
+  String? chosenWilaya;
+  String? chosenCommune;
 
-  String? chosenYear;
-
-  String? chosenGroup;
-
+  // Mapping of Wilaya (province) to Commune (city) options
   Map<String, List<String>> levels = {
-    '1CPI': ['A01', 'A02'],
-    '2CP': ['A03', 'A04'],
-    '1CS': ['A05', 'A06']
+    'Oran': ['Bir El Djir', 'Centre Ville'],
+    'Sidi Bel Abbès': ['Centre Ville', 'El Wiam'],
+    'Mascara': ['Dar El Bayda', 'Zone 8'],
+    'Ain Tmouchent': ['Sidi Ben Ada', 'Hay Zitoun'],
   };
 
   @override
@@ -51,10 +50,13 @@ class _DropDownState extends State<DropDown> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.fieldName,
-            textAlign: TextAlign.start,
-            style: context.textTheme.bodySmall!
-                .copyWith(fontWeight: FontWeight.w600, color: kGray[900])),
+        // Wilaya Dropdown
+        Text(
+          "Wilaya",
+          textAlign: TextAlign.start,
+          style: TextStyle(
+              fontWeight: FontWeight.w600, color: kGray[900], fontSize: 12.sp),
+        ),
         SizedBox(
           height: 5.h,
         ),
@@ -75,30 +77,95 @@ class _DropDownState extends State<DropDown> {
               iconEnabledColor: kGray[900],
               isExpanded: true,
               hint: Text(
-                'Sidi Bel Abbès',
-                style: context.textTheme.bodyMedium!
-                    .copyWith(color: kGray[300], fontWeight: FontWeight.w500),
+                'Ain Tmouchent',
+                style: TextStyle(
+                  color: kGray[300],
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.sp,
+                ),
               ),
+              // Populate the Wilaya dropdown
               items: levels.keys.map(buildMenuItem).toList(),
               onChanged: (value) => setState(() {
-                chosenYear = value;
-                chosenGroup = levels[chosenYear]![0];
+                chosenWilaya = value;
+                // When Wilaya changes, reset chosen Commune to null
+                chosenCommune = null;
               }),
+              value: chosenWilaya, // Set selected value
             ),
           ),
         ),
+
+        SizedBox(height: 15.h),
+
+        // Commune Dropdown (depends on the selected Wilaya)
+        if (chosenWilaya != null) // Only show Commune dropdown if Wilaya is selected
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Commune",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: kGray[900],
+                    fontSize: 12.sp),
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              SizedBox(
+                height: 44.h,
+                child: Center(
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 12.h, horizontal: 18.w),
+                      fillColor: Colors.white,
+                      filled: true,
+                      enabledBorder: outlineInputBorder,
+                      border: outlineInputBorder,
+                      focusedBorder: focusedInputBorder,
+                    ),
+                    icon: const Icon(FluentIcons.chevron_down_16_filled),
+                    iconEnabledColor: kGray[900],
+                    isExpanded: true,
+                    hint: Text(
+                      'Sidi Ben Ada',
+                      style: TextStyle(
+                        color: kGray[300],
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                    // Populate the Commune dropdown based on chosen Wilaya
+                    items: chosenWilaya != null
+                        ? levels[chosenWilaya]!.map(buildMenuItem).toList()
+                        : [],
+                    onChanged: (value) => setState(() {
+                      chosenCommune = value;
+                    }),
+                    value: chosenCommune, // Set selected value
+                  ),
+                ),
+              ),
+            ],
+          ),
       ],
     );
   }
-}
 
-DropdownMenuItem<String> buildMenuItem(String item) {
-  return DropdownMenuItem(
-    value: item,
-    child: Text(
-      item,
-      style: TextStyle(
-          fontWeight: FontWeight.w500, fontSize: 12.h, color: kGray[900]),
-    ),
-  );
+  DropdownMenuItem<String> buildMenuItem(String item) {
+    return DropdownMenuItem(
+      value: item,
+      child: Text(
+        item,
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 12.sp,
+          color: kGray[900],
+        ),
+      ),
+    );
+  }
 }

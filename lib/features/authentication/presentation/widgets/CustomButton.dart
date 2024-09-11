@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marchic/themes/theme_context.dart';
 import 'package:marchic/themes/tokens.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
+  final VoidCallback? onPressed; 
 
-  CustomButton({
-    Key? key,
+  const CustomButton({
+    super.key,
     required this.text,
-  }) : super(key: key);
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +18,20 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       height: 45.h,
       child: ElevatedButton(
-        onPressed: () {
-          // Add onPressed action here
-        },
+        onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(kPrimaryColor),
-          elevation: MaterialStateProperty.all(0),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          backgroundColor: WidgetStateProperty.all(kPrimaryColor),
+          elevation: WidgetStateProperty.all(0),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
           ),
         ),
         child: Text(text,
-            style: context.textTheme.bodyMedium!
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w500)),
+            style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14.sp
+            )),
       ),
     );
   }

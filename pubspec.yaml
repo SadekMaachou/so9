@@ -27,6 +27,6 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets\Line Divider.svg
-    - assets\Logos\Google Logo.svg
+    - assets/logos/
+    - assets/
   uses-material-design: true

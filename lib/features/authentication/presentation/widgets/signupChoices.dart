@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marchic/themes/theme_context.dart';
 import 'package:marchic/themes/tokens.dart';
 
 class CustomContainer extends StatelessWidget {
   final String text;
   final Widget icon;
 
-  const CustomContainer({Key? key, required this.text, required this.icon})
-      : super(key: key);
+  const CustomContainer({super.key, required this.text, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +28,9 @@ class CustomContainer extends StatelessWidget {
             child: Text(
               text,
               textAlign: TextAlign.center,
-              style: context.textTheme.bodyMedium!
-                  .copyWith(color: kGray[900], fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: kGray[900], fontWeight: FontWeight.w500, fontSize: 14.sp
+              )
             ),
           ),
         ],

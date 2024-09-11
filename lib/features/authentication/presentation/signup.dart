@@ -1,7 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marchic/themes/theme_context.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:marchic/themes/tokens.dart';
 import 'widgets/signupChoices.dart';
 
@@ -17,23 +17,25 @@ class SignUp extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 65.h,
+                height: 115.h,
               ),
               Text(
                 "Inscription",
-                style: context.textTheme.bodyLarge!
-                    .copyWith(color: kGray[900], fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 22.sp,color: kGray[900], fontWeight: FontWeight.w600
+                ),
               ),
               SizedBox(
                 height: 16.h,
               ),
               Text(
                 "Créer un profil et faitez vos courses en ligne",
-                style: context.textTheme.bodySmall!
-                    .copyWith(color: kGray[500], fontWeight: FontWeight.w400),
+                style: TextStyle(
+                  color: kGray[500], fontWeight: FontWeight.w400, fontSize: 12.sp
+                )
               ),
               SizedBox(
-                height: 70.h,
+                height: 128.h,
               ),
               const CustomContainer(
                 text: 'Continuer avec téléphone',
@@ -42,28 +44,34 @@ class SignUp extends StatelessWidget {
               SizedBox(
                 height: 13.h,
               ),
-              const CustomContainer(
+              CustomContainer(
                 text: 'Continuer avec Google',
-                icon: Icon(FluentIcons.call_20_regular),
+                icon: SvgPicture.asset(
+                  'assets/logos/Google.svg',
+                  height: 18.h,
+                  width: 18.w,
+                ),
               ),
               SizedBox(
-                height: 166.h,
+                height: 170.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Tu as déja un compte ?",
-                    style: context.textTheme.bodySmall!.copyWith(
-                        color: kGray[900], fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      color: kGray[900], fontWeight: FontWeight.w500, fontSize: 14.sp
+                    )
                   ),
                   SizedBox(
                     width: 6.w,
                   ),
                   Text(
                     "Connexion",
-                    style: context.textTheme.bodySmall!.copyWith(
-                        color: kPrimaryColor, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                      color: kPrimaryColor, fontWeight: FontWeight.w500, fontSize: 14.sp
+                    )
                   ),
                 ],
               )

@@ -3,10 +3,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:marchic/themes/theme_context.dart';
 import 'package:marchic/themes/tokens.dart';
 
-class otpField extends StatelessWidget {
+class OtpField extends StatefulWidget {
+  final bool first;
+  final bool last;
+  final TextEditingController otpController;
+
+  OtpField({
+    Key? key,
+    required this.first,
+    required this.last,
+    required this.otpController,
+  }) : super(key: key);
+
+  @override
+  _OtpFieldState createState() => _OtpFieldState();
+}
+
+class _OtpFieldState extends State<OtpField> {
   var focusedInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(8.0),
     borderSide: BorderSide(
@@ -22,17 +37,6 @@ class otpField extends StatelessWidget {
     ),
   );
 
-  otpField({
-    Key? key,
-    required this.first,
-    required this.last,
-    required this.otpController,
-  }) : super(key: key);
-
-  final bool first;
-  final TextEditingController otpController;
-  final bool last;
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -40,38 +44,38 @@ class otpField extends StatelessWidget {
       child: Center(
         child: TextFormField(
           autovalidateMode: AutovalidateMode.always,
-          controller: otpController,
+          controller: widget.otpController,
           autofocus: true,
           inputFormatters: [
             LengthLimitingTextInputFormatter(1),
-            FilteringTextInputFormatter.digitsOnly
+            FilteringTextInputFormatter.digitsOnly,
           ],
           cursorColor: kGray[300],
           keyboardType: TextInputType.number,
-          style: context.textTheme.bodyMedium!
-              .copyWith(fontWeight: FontWeight.w500),
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 14.sp,
+            color: kGray[900],
+          ),
           textAlign: TextAlign.center,
           decoration: InputDecoration(
             enabledBorder: outlineInputBorder,
             border: outlineInputBorder,
             focusedBorder: focusedInputBorder,
             fillColor: Colors.white,
-            contentPadding: EdgeInsets.symmetric(vertical: 10.h),
+            contentPadding: EdgeInsets.symmetric(vertical: 12.h),
             filled: true,
           ),
-          onChanged: (value) => {
-            if (value.length == 1 && last == false)
-              {
-                FocusScope.of(context).nextFocus(),
-              },
-            if (value.isEmpty && first == false)
-              {
-                FocusScope.of(context).previousFocus(),
-              },
-            if (value.length == 1 && last == true)
-              {
-                FocusScope.of(context).unfocus(),
-              },
+          onChanged: (value) {
+            if (value.length == 1 && !widget.last) {
+              FocusScope.of(context).nextFocus();
+            }
+            if (value.isEmpty && !widget.first) {
+              FocusScope.of(context).previousFocus();
+            }
+            if (value.length == 1 && widget.last) {
+              FocusScope.of(context).unfocus();
+            }
           },
         ),
       ),
