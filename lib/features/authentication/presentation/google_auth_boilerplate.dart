@@ -1,34 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-const List<String> scopes = <String>[
-  'email',
-];
-
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  // Optional clientId
-  // clientId: 'your-client_id.apps.googleusercontent.com',
-  scopes: scopes,
-);
-
-class GoogleAuth extends StatefulWidget {
-  const GoogleAuth({super.key});
-
-  @override
-  State<GoogleAuth> createState() => _GoogleAuthState();
+void main() {
+  runApp(
+    const MaterialApp(
+      title: 'Google Sign In',
+      home: SignInDemo(),
+    ),
+  );
 }
 
-class _GoogleAuthState extends State<GoogleAuth> {
+class SignInDemo extends StatefulWidget {
+  const SignInDemo({super.key});
+
+  @override
+  State createState() => _SignInDemoState();
+}
+
+class _SignInDemoState extends State<SignInDemo> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
-  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
-    _googleSignIn.onCurrentUserChanged
-        .listen((GoogleSignInAccount? account) async {
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
       setState(() {
         _currentUser = account;
       });
+    });
+    _googleSignIn.signInSilently();
+  }
+
+  Future<void> _handleSignIn() async {
+    try {
+      final GoogleSignInAccount? user = await _googleSignIn.signIn();
+      setState(() {
+        _currentUser = user;
+      });
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  Future<void> _handleSignOut() async {
+    await _googleSignIn.signOut();
+    setState(() {
+      _currentUser = null;
     });
   }
 
@@ -37,40 +55,30 @@ class _GoogleAuthState extends State<GoogleAuth> {
     final GoogleSignInAccount? user = _currentUser;
 
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            user == null
-                ? ElevatedButton(
-                    onPressed: () async {
-                      setState(() => isLoading = true);
-                      await _googleSignIn.signIn();
-                      setState(() => isLoading = false);
-                    },
-                    child: isLoading
-                        ? Transform.scale(
-                            scale: 0.5,
-                            child: const CircularProgressIndicator.adaptive())
-                        : const Text('Google Sign in'),
-                  )
-                : const SizedBox(),
-            user != null
-                ? Center(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await _googleSignIn.signOut();
-                      },
-                      child: const Text('Google Sign Out'),
-                    ),
-                  )
-                : const SizedBox(),
-            Text(user?.displayName ?? ''),
-            Text(user?.email ?? ''),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('Google Sign In'),
+      ),
+      body: Center(
+        child: user != null
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(user.photoUrl ?? ''),
+                    radius: 50,
+                  ),
+                  Text(user.displayName ?? ''),
+                  Text(user.email),
+                  ElevatedButton(
+                    onPressed: _handleSignOut,
+                    child: const Text('SIGN OUT'),
+                  ),
+                ],
+              )
+            : ElevatedButton(
+                onPressed: _handleSignIn,
+                child: const Text('SIGN IN'),
+              ),
       ),
     );
   }

@@ -10,12 +10,12 @@ class OtpField extends StatefulWidget {
   final bool last;
   final TextEditingController otpController;
 
-  OtpField({
-    Key? key,
+  const OtpField({
+    super.key,
     required this.first,
     required this.last,
     required this.otpController,
-  }) : super(key: key);
+  });
 
   @override
   _OtpFieldState createState() => _OtpFieldState();
