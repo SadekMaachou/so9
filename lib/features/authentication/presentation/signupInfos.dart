@@ -44,15 +44,10 @@ class _SignUpInfosState extends State<SignUpInfos> {
                   )
                 ),
                 SizedBox(
-                  height: 32.h,
+                  height: 50.h,
                 ),
                 CustomField(
                     fieldName: "Nom Complet", hintText: "Maachou Yahya", fieldController: _nameController,),
-                SizedBox(
-                  height: 9.h,
-                ),
-                CustomField(
-                    fieldName: "Email", hintText: "ys.maachou@esi-sba.dz", fieldController: _emailController,),
                 SizedBox(
                   height: 9.h,
                 ),
@@ -60,10 +55,12 @@ class _SignUpInfosState extends State<SignUpInfos> {
                   fieldName: 'Wilaya',
                 ),
                 SizedBox(
-                  height: 88.h,
+                  height: 100.h,
                 ),
-                const CustomButton(
+                CustomButton(
                   text: 'Inscrire',
+                  onPressed: () {
+                  },
                 ),
                 SizedBox(
                   height: 20.h,

@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDf7m5TW9qIl7nj2WxQDaAfS9sWpOqrhGE',
-    appId: '1:1088428489654:android:1fd9ae65ce6b02e11edf17',
-    messagingSenderId: '1088428489654',
-    projectId: 'market-d0e2f',
-    storageBucket: 'market-d0e2f.appspot.com',
+    apiKey: 'AIzaSyDBBYZTJsVlcQJ865nUp4cjQ07f7VCF1go',
+    appId: '1:6722844921:android:b49ed0fb5426809cc88a28',
+    messagingSenderId: '6722844921',
+    projectId: 'marchic-a966e',
+    storageBucket: 'marchic-a966e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD5wsOoEbeh8HF7IfvcyAg5QjtEwHhaDxs',
-    appId: '1:1088428489654:ios:c6435b29e04d070a1edf17',
-    messagingSenderId: '1088428489654',
-    projectId: 'market-d0e2f',
-    storageBucket: 'market-d0e2f.appspot.com',
-    iosClientId: '1088428489654-9g6lb1ltnskqm9slala07qimrlkeha35.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCgVps8uJNHCda4S8aBVIVDflhTKu6wZMQ',
+    appId: '1:6722844921:ios:f891fb272623cccac88a28',
+    messagingSenderId: '6722844921',
+    projectId: 'marchic-a966e',
+    storageBucket: 'marchic-a966e.appspot.com',
+    iosClientId: '6722844921-2er342e57vvfor141rfi4pc939sd460l.apps.googleusercontent.com',
     iosBundleId: 'com.example.marchic',
   );
 

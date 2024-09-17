@@ -32,4 +32,5 @@ flutter:
   assets:
     - assets/logos/
     - assets/
+    - assets/Logos/Free shipping-rafiki 1.svg
   uses-material-design: true
